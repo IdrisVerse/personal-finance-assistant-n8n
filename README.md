@@ -62,34 +62,7 @@ Every expense is automatically classified into one of three categories:
 
 ## 🏗️ System Architecture
 
-```
-Telegram Message (text / voice / image)
-        │
-        ▼
-  [n8n Workflow Engine]
-        │
-   ┌────┴────┐
-   │         │
-Voice→Text  Image→Text
-   │         │
-   └────┬────┘
-        │
-    AI / NLP
-  (Extract: amount, category, type)
-        │
-        ▼
-  Google Sheets (Storage)
-        │
-   ┌────┴────┐
-   │         │
-Switch     Schedule
-(classify)  Trigger
-   │         │
-Telegram   Weekly
- Reply    Report
-```
-
----
+![Architecture](screenshots/architecture.png)
 
 ## 🛠️ Tech Stack
 
