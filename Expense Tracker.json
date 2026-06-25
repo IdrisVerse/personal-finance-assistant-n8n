@@ -1,0 +1,1646 @@
+{
+  "name": "Expense Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -336,
+        -80
+      ],
+      "id": "a065dcf6-5bff-4338-828d-e95ad554a0cb",
+      "name": "Telegram Trigger",
+      "webhookId": "67880340-31e0-47fa-88af-77e4c9d364f2",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=☕ تم تسجيل {{$json[\"amount\"]}} جنيه ⚠️ ده صرف رفاهي… حاول توازن 😉",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3056,
+        -592
+      ],
+      "id": "d6ef021c-d8c4-499e-bdbd-c0bca1bd3035",
+      "name": "Luxury message",
+      "webhookId": "3e7cae64-dd6e-4af0-af0d-308af1c01a65",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=🚀 تم تسجيل {{$json[\"amount\"]}} جنيه 👏 استثمار ممتاز في نفسك!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3056,
+        -368
+      ],
+      "id": "5d779199-1c93-477c-8758-38dbb96c7a17",
+      "name": "Investment message",
+      "webhookId": "3e7cae64-dd6e-4af0-af0d-308af1c01a65",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=✔️ تم تسجيل {{$json[\"amount\"]}} جنيه 📌 صرف ضروري، تمام 👍",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3056,
+        -160
+      ],
+      "id": "25ad7c36-7a23-4920-a070-b7fb0de5c8f8",
+      "name": "Necessary message",
+      "webhookId": "3e7cae64-dd6e-4af0-af0d-308af1c01a65",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.importance }}",
+                    "rightValue": "Luxury",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e946dfb8-ecc3-44e4-a831-aa790962b789"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "0bdf1cb7-bf9a-42d1-b6ac-525c86374e52",
+                    "leftValue": "={{ $json.importance }}",
+                    "rightValue": "Investment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "8fd33cbc-a5d9-48c6-b55f-6320bd50f963",
+                    "leftValue": "={{ $json.importance }}",
+                    "rightValue": "Necessary",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2608,
+        -384
+      ],
+      "id": "5469a78e-7d32-4298-929f-94a1323ace99",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        1216,
+        368
+      ],
+      "id": "c56d936c-be19-4794-bfae-6693feb5c30d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1440,
+        368
+      ],
+      "id": "83e9e2d8-104f-4073-b825-584dbab99158",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = items;\n\nlet total = 0;\nconst byCategory = {};\nconst byImportance = {};\n\nfor (const item of rows) {\n  const amount = Number(item.json.amount) || 0;\n  const category = item.json.category || \"unknown\";\n  const importance = item.json.importance || \"unknown\";\n\n  total += amount;\n\n  byCategory[category] = (byCategory[category] || 0) + amount;\n  byImportance[importance] = (byImportance[importance] || 0) + amount;\n}\n\nreturn [\n  {\n    json: {\n      total,\n      byCategory,\n      byImportance,\n      count: rows.length\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        368
+      ],
+      "id": "d3fd7e29-b759-4f26-94fe-e69d5e752818",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=دي بيانات صرف أسبوعية:\n- إجمالي الصرف: {{ $json.total }} جنيه\n- عدد العمليات: {{ $json.count }}\n- حسب الفئة: {{ JSON.stringify($json.byCategory) }}\n- حسب الأهمية: {{ JSON.stringify($json.byImportance) }}\n\nلخّصهم في رسالة قصيرة ودودة بالعربي،\nوادي نصيحة عملية واحدة لتقليل الصرف.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        368
+      ],
+      "id": "842f3a41-8152-449d-b48a-9b2a6ed2e522",
+      "name": "summary model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "RZveNLVDSBd9lHbu",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=805259954",
+        "text": "=📊 تقريرك الأسبوعي:\n\n{{$json.content.parts[0].text}}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2096,
+        368
+      ],
+      "id": "c0aa48a3-5b75-4787-b826-44aae73c2232",
+      "name": "summary message1",
+      "webhookId": "3e7cae64-dd6e-4af0-af0d-308af1c01a65",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        -256
+      ],
+      "id": "df966f53-4f34-4061-be50-1f55c4f7432a",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "RZveNLVDSBd9lHbu",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-pro-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-pro-preview"
+        },
+        "text": "You are an expert financial receipt analyzer.\n\nAnalyze the uploaded receipt image and determine the FINAL total amount actually paid by the customer.\n\nImportant rules:\n- The receipt may contain multiple monetary values (e.g. base amount, service fees, partial payments).\n- You MUST identify the amount labeled or implied as the final payment.\n- Look for keywords near the amount such as:\n  \"Total\", \"Grand Total\", \"Final Amount\", \"Amount Paid\",\n  \"المبلغ الكلي\", \"الإجمالي\", \"صافى المدفوع\", \"إجمالي المدفوع\".\n- If the receipt contains more than one paid amount, SUM them ONLY if they clearly represent separate paid components of the same transaction.\n- Ignore balances, previous dues, account numbers, reference numbers, dates, and meter readings.\n- Do NOT choose the largest number blindly.\n- If the receipt is related to electricity, set the category to \"Electricity\".\n- If the currency is not clearly shown, assume EGP.\n\nReturn ONLY the following format (no extra text):\n\nCategory: <category>\nTotal Amount Paid: <final_amount> \n",
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        144
+      ],
+      "id": "8a0440af-577c-4b14-a698-df1681f30da4",
+      "name": "Analyze an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HmaOZdVcIzH6WKXP",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4be9b543-02a2-4e28-8532-0717f87e2567",
+              "name": "type",
+              "value": "={{ $json.type }}",
+              "type": "string"
+            },
+            {
+              "id": "d4bfae5a-8873-46fa-b6b8-7867bccf97fa",
+              "name": "amount",
+              "value": "={{ $json.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "69732b95-8d24-4cfc-992c-63a8f1396912",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2320,
+        240
+      ],
+      "id": "9dd06ecc-1f55-40da-b095-71606e9c8359",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "حلويييات سجلت الراتب اوالبونص 🚀",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3568,
+        240
+      ],
+      "id": "2fe1bdd9-d749-4fb4-adb2-4834c2d699e2",
+      "name": "Send a text message",
+      "webhookId": "1d0c0953-c729-498b-ac1e-2db45b276b0d",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date": "={{$now}}",
+            "amount": "={{ $json.amount }}",
+            "category": "={{ $json.category }}",
+            "importance": "={{ $json.importance }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "importance",
+              "displayName": "importance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2384,
+        -368
+      ],
+      "id": "15bb08f7-036f-4ca2-9eeb-93444a4cf2b0",
+      "name": "Append row in Expanses",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1327024110,
+          "mode": "list",
+          "cachedResultName": "Balance",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=1327024110"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3552,
+        -368
+      ],
+      "id": "0428bec2-a2f1-4f76-b6e3-ba1ab88abaca",
+      "name": "return last row in the sheet ( Balance )",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1327024110,
+          "mode": "list",
+          "cachedResultName": "Balance",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=1327024110"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Balance": "={{ $json.new_balance }}",
+            "Amount": "=-{{ $json.minus_amount }}",
+            "Type": "=expenses"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Balance",
+              "displayName": "Balance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4304,
+        -368
+      ],
+      "id": "80cada99-4ea9-4514-8871-7508c2e78eb4",
+      "name": "Append new Balance",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nif (!rows.length) {\n  // لو الشيت فاضي\n  const amount = parseFloat($json.amount ?? 0);\n  return [{ ...$json, current_balance: 0, new_balance: 0 - amount }];\n}\n\nconst last = rows.reduce((best, it) => {\n  const rn = it.json?.row_number ?? 0;\n  return rn > (best.json?.row_number ?? 0) ? it : best;\n}, rows[0]);\n\nconst current = parseFloat(last.json.Balance ?? last.json.balance ?? 0);\nconst amount = $('Edit Fields3').first().json.amount;\n\nconst newBalance = current + amount;\n\nreturn [{\n  ...$json,\n  last_row_number: last.json.row_number,\n  current_balance: current,\n  new_balance: newBalance,\n  added_amount: amount\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3088,
+        240
+      ],
+      "id": "596ace56-a614-4dff-9fbb-14ba08f5cfeb",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1327024110,
+          "mode": "list",
+          "cachedResultName": "Balance",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=1327024110"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2592,
+        240
+      ],
+      "id": "7974d0d0-9111-48b2-a460-aed2c7563ec8",
+      "name": "return last row in the sheet ( Balance )1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst lastRowNumber = items.reduce((max, it) => {\n  const rn = it?.json?.row_number || 0;\n  return rn > max ? rn : max;\n}, 0);\n\nconst lastRow = items.find(it => it.json.row_number === lastRowNumber);\n\nreturn [{ lastRowNumber, ...lastRow?.json }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2800,
+        240
+      ],
+      "id": "15568c13-2e85-420a-86a8-7041aa1c2639",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1327024110,
+          "mode": "list",
+          "cachedResultName": "Balance",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=1327024110"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Balance": "={{ $json.new_balance }}",
+            "Amount": "={{ $json.added_amount }}",
+            "Type": "=bouns or salary"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Balance",
+              "displayName": "Balance",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3296,
+        240
+      ],
+      "id": "b3d0fee3-f274-460c-bffd-7c7eb897a25b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nif (!rows.length) {\n  // لو الشيت فاضي\n  const amount = parseFloat($json.amount ?? 0);\n  return [{ ...$json, current_balance: 0, new_balance: 0 - amount }];\n}\n\nconst last = rows.reduce((best, it) => {\n  const rn = it.json?.row_number ?? 0;\n  return rn > (best.json?.row_number ?? 0) ? it : best;\n}, rows[0]);\n\nconst current = $input.first().json.Balance;\nconst amount = $input.first().json.Amount;\n\nconst newBalance = current - amount;\n\nreturn [{\n  ...$json,\n  last_row_number: last.json.row_number,\n  current_balance: current,\n  new_balance: newBalance,\n  minus_amount: amount\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4096,
+        -368
+      ],
+      "id": "2f667625-cf74-4408-8889-aacbb59eca50",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst lastRowNumber = items.reduce((max, it) => {\n  const rn = it?.json?.row_number || 0;\n  return rn > max ? rn : max;\n}, 0);\n\nconst lastRow = items.find(it => it.json.row_number === lastRowNumber);\n\nreturn [{ lastRowNumber, ...lastRow?.json }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3808,
+        -368
+      ],
+      "id": "3491ccbf-33d7-4c2f-ae0c-58bb77404762",
+      "name": "Code in JavaScript5"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg",
+          "mode": "list",
+          "cachedResultName": " Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OMSKLJ3P7q3jYozNQbR3N4MYcNMnuho6q17N8cRR3wg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1312,
+        -400
+      ],
+      "id": "1b69253c-8766-4ec2-8e4c-8fffa7c4a82f",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "w6x5KwXECylRVxR7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\n\nconst now = new Date();\nconst start = new Date(now.getFullYear(), now.getMonth(), 1); \n\nfunction toDate(x){\n  const d = new Date(x);\n  return isNaN(d) ? null : d;\n}\n\nconst filtered = rows.filter(r => {\n  const d = toDate(r.date);\n  return d && d >= start && d <= now;\n});\n\nconst sumsByImp = { Luxury:0, Necessary:0, Investment:0, Unknown:0 };\nconst sumsByCat = {};\n\nlet total = 0;\nfor (const r of filtered) {\n  const amt = parseFloat(r.amount ?? 0) || 0;\n  const impRaw = (r.importance ?? \"Unknown\").toString();\n  const imp = sumsByImp[impRaw] !== undefined ? impRaw : \"Unknown\";\n  const cat = (r.category ?? \"Unspecified\").toString();\n\n  total += amt;\n  sumsByImp[imp] += amt;\n  sumsByCat[cat] = (sumsByCat[cat] || 0) + amt;\n}\n\nconst topCats = Object.entries(sumsByCat)\n  .sort((a,b) => b[1]-a[1])\n  .slice(0,5)\n  .map(([category, amount]) => ({ category, amount }));\n\nconst pct = (x) => total ? Math.round((x/total)*100) : 0;\n\nreturn [{\n  period_start: start.toISOString(),\n  period_end: now.toISOString(),\n  tx_count: filtered.length,\n  total_spend: total,\n  by_importance: sumsByImp,\n  by_importance_pct: {\n    Luxury: pct(sumsByImp.Luxury),\n    Necessary: pct(sumsByImp.Necessary),\n    Investment: pct(sumsByImp.Investment),\n    Unknown: pct(sumsByImp.Unknown),\n  },\n  top_categories: topCats,\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -400
+      ],
+      "id": "ebfd684f-6647-4673-b64f-be636b68371e",
+      "name": "Code in JavaScript6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "01cc15d7-161b-4d79-800a-cab21e795e08",
+              "name": "expense_text",
+              "value": "={{$json[\"message\"][\"text\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "2040f2b3-8e7e-484f-89b6-0cbd4ba454cb",
+              "name": "message.chat.id",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -80
+      ],
+      "id": "75b0e377-e414-4e6e-9154-05e02d4b0ef4",
+      "name": "asigning text "
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d6c13c87-1108-4adc-b532-08ea7b112018",
+              "leftValue": "={{ $json.expense_text }}",
+              "rightValue": "تحليل",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        656,
+        -80
+      ],
+      "id": "85f20b69-22bb-4dc5-9582-bfefe50c3a50",
+      "name": "user asked for analysis ?"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        -256
+      ],
+      "id": "574f609b-aefa-48ce-915f-8c7e99dda73f",
+      "name": "Get the audio file ",
+      "webhookId": "bbda1284-5369-4bca-8cbd-7b46234c9ba0",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "01cc15d7-161b-4d79-800a-cab21e795e08",
+              "name": "expense_text",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "2040f2b3-8e7e-484f-89b6-0cbd4ba454cb",
+              "name": "message.chat.id",
+              "value": "={{ $('type of the message').item.json.message.chat.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        -256
+      ],
+      "id": "9a82026e-8348-4a78-aa32-e56dd41a75a7",
+      "name": "process text of the audio file "
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "4290af04-fe8b-4c84-8e88-d42e5ff978c4"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c174458b-a2d8-4757-9a58-c47346661990",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2f7bfa07-ad6e-418f-82aa-2a7f050489eb",
+                    "leftValue": "={{ $json.message.photo[0].file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        -96
+      ],
+      "id": "06dcf91a-2568-4d4d-aad6-a5e75ce13bdb",
+      "name": "type of the message"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $('Telegram Trigger').item.json.message.photo[0].file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        144
+      ],
+      "id": "558be8ad-9e3b-45d1-ba53-6d59d2de9641",
+      "name": "get the image ",
+      "webhookId": "bbda1284-5369-4bca-8cbd-7b46234c9ba0",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "01cc15d7-161b-4d79-800a-cab21e795e08",
+              "name": "expense_text",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "2040f2b3-8e7e-484f-89b6-0cbd4ba454cb",
+              "name": "message.chat.id",
+              "value": "={{ $('type of the message').item.json.message.chat.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1008,
+        144
+      ],
+      "id": "42a7fc05-027c-4dd8-9320-f4fa965d1d82",
+      "name": "process the text of the image"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a smart personal finance assistant.\n\nFrom the following text, identify the transaction type and extract the relevant details.\n\nTransaction type must be ONE of:\n- \"Salary\" (income / راتب)\n- \"Goal\" (saving goal / هدف ادخار)\n- \"Expense\" (spending / صرفية)\n\nRules:\n1. If the text refers to receiving money regularly or income → type = \"Salary\".\n2. If the text refers to saving money for a future purpose → type = \"Goal\".\n3. If the text refers to spending money → type = \"Expense\".\n\nIf type = \"Goal\", extract:\n- goal_name (short clear name in English, e.g. travel, car, emergency, house)\n- goal_action: one of [\"create\", \"update\"]\n  - \"create\" → if the user is starting a new saving goal or setting a target amount.\n  - \"update\" → if the user is adding money to an existing goal.\n\nIf type = \"Expense\", also determine:\n- importance: one of [\"Necessary\", \"Luxury\", \"Investment\"]\n\nExtract for ALL types:\n- amount (number only, no currency symbols)\n- category (single short word in English)\n\nText:\n{{$json[\"expense_text\"]}}\n\nReturn ONLY valid JSON in this exact format:\n{\n  \"type\": \"Salary | Goal | Expense\",\n  \"amount\": number | null,\n  \"category\": \"string\",\n  \"goal_name\": \"string | null\",\n  \"goal_action\": \"create | update | null\",\n  \"importance\": \"Necessary | Luxury | Investment | null\"\n}\n\nNotes:\n- If type is NOT \"Goal\", set goal_name and goal_action to null.\n- If type is NOT \"Expense\", set importance to null.\n- goal_name MUST NOT be null when type = \"Goal\".\n- If the amount is not explicitly mentioned, infer it if possible; otherwise use null.\n- Do NOT include any explanation or extra text outside the JSON.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1488,
+        -64
+      ],
+      "id": "c517141d-d400-4fe5-a3a2-1ff872c24ef6",
+      "name": "the Brain",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HmaOZdVcIzH6WKXP",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let text = $json.content?.parts?.[0]?.text || \"\";\n\n// تنظيف أي markdown\ntext = text.replace(/```json/gi, '').replace(/```/g, '').trim();\n\nlet parsed;\ntry {\n  parsed = JSON.parse(text);\n} catch (e) {\n  throw new Error(\"Invalid JSON from AI: \" + text);\n}\n\nconst type = parsed.type || \"Expense\";\n\n// بناء الناتج النهائي\nconst result = {\n  type,\n  amount: parsed.amount ?? null,\n  category: parsed.category ?? null,\n  goal_name: type === \"Goal\" ? (parsed.goal_name || null) : null,\n  goal_action: type === \"Goal\" ? (parsed.goal_action || null) : null,\n  importance: type === \"Expense\" ? (parsed.importance || null) : null,\n  date: new Date().toISOString()\n};\n\n// حماية إضافية\nif (type === \"Goal\" && !result.goal_name) {\n  throw new Error(\"Goal type requires goal_name from AI\");\n}\n\nreturn [\n  {\n    json: result\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        -64
+      ],
+      "id": "6cce75f4-8183-4e36-b760-1fdc868028fd",
+      "name": "process of the model output"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "Expense",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "60a8930a-a694-43f4-a023-8875a62d2c18"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9cc85f23-820b-4ec1-9135-f92aefbd45aa",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "Salary",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2016,
+        -64
+      ],
+      "id": "b3158be2-379e-4028-a6e3-7c336ed5d377",
+      "name": "its add or minus ? "
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-flash-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=أنت مساعد مالي شخصي. بناءً على الملخص التالي (JSON) اكتب:\n\nأكبر نوع صرف (Luxury/Necessary/Investment) بالنسبة المئوية.\n\n5 نصايح لتقليل الصرف بدون التأثير على الضروريات.\n\nاقتراح ميزانية الأسبوع القادم (حد أقصى للـLuxury).\nاكتب بالعربي وبشكل نقاط قصيرة.\nالملخص: {{ JSON.stringify($json) }}\n\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1728,
+        -400
+      ],
+      "id": "67236045-b0f0-4140-b379-49080d6332b7",
+      "name": "analysis ",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HmaOZdVcIzH6WKXP",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=805259954",
+        "text": "={{ $json.content.parts[0].text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2080,
+        -400
+      ],
+      "id": "f093fdf2-ac3d-434a-8271-a4d7a3b51853",
+      "name": "analysis from the model",
+      "webhookId": "e70390f5-60f0-48ca-95f8-45a9bdbf61ba",
+      "credentials": {
+        "telegramApi": {
+          "id": "IM7R5F8pjb96upDt",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "type of the message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Luxury message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Investment message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Necessary message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Investment message": {
+      "main": [
+        [
+          {
+            "node": "return last row in the sheet ( Balance )",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Luxury message": {
+      "main": [
+        [
+          {
+            "node": "return last row in the sheet ( Balance )",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Necessary message": {
+      "main": [
+        [
+          {
+            "node": "return last row in the sheet ( Balance )",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "summary model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "summary model1": {
+      "main": [
+        [
+          {
+            "node": "summary message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "process text of the audio file ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze an image": {
+      "main": [
+        [
+          {
+            "node": "process the text of the image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "return last row in the sheet ( Balance )1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in Expanses": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
+    "return last row in the sheet ( Balance )": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "return last row in the sheet ( Balance )1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Append new Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "analysis ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "asigning text ": {
+      "main": [
+        [
+          {
+            "node": "user asked for analysis ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "user asked for analysis ?": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "the Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the audio file ": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process text of the audio file ": {
+      "main": [
+        [
+          {
+            "node": "the Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "type of the message": {
+      "main": [
+        [
+          {
+            "node": "Get the audio file ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "asigning text ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get the image ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get the image ": {
+      "main": [
+        [
+          {
+            "node": "Analyze an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process the text of the image": {
+      "main": [
+        [
+          {
+            "node": "the Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "the Brain": {
+      "main": [
+        [
+          {
+            "node": "process of the model output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process of the model output": {
+      "main": [
+        [
+          {
+            "node": "its add or minus ? ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "its add or minus ? ": {
+      "main": [
+        [
+          {
+            "node": "Append row in Expanses",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "analysis ": {
+      "main": [
+        [
+          {
+            "node": "analysis from the model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "9f40c47d-a2aa-485f-b6ab-a93df4d2d636",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3a66af810221329b76a5dd2538d475fd11db5fed19ea46e158ef93fd28dbf16b"
+  },
+  "id": "xRntSub8cAYUjmxvR29oD",
+  "tags": []
+}
