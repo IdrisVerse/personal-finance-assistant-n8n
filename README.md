@@ -62,7 +62,7 @@ Every expense is automatically classified into one of three categories:
 
 ## 🏗️ System Architecture
 
-![Architecture](screenshots/architecture.png)
+![Architecture](finance_bot_architecture.png)
 
 ## 🛠️ Tech Stack
 
